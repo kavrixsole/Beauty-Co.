@@ -132,6 +132,7 @@ document.getElementById("applyVoucher").onclick = () => {
   }
 };
 
+
 // Checkout
 document.getElementById("checkout").onclick = () => {
 
@@ -148,71 +149,7 @@ document.getElementById("checkout").onclick = () => {
   updateCart();
 };
 
+
 // Start the website on the Home page
-updateCart();
-showPage("homePage");    productGrid.innerHTML = products.map((product, index) => productCard(product, index)).join("");
-  }
-
-  if (homeCollection) {
-    homeCollection.innerHTML = products.slice(0, 4).map((product, index) => productCard(product, index)).join("");
-  }
-}
-
-function addToCart(index) {
-  cart.push(products[index]);
-  alert("Added to cart!");
-  updateCart();
-}
-
-function removeItem(index) {
-  cart.splice(index, 1);
-  updateCart();
-}
-
-function updateCart() {
-  const cartItems = document.getElementById("cartItems");
-  if (!cartItems) return;
-
-  if (cart.length === 0) {
-    cartItems.innerHTML = "<p>Your cart is empty.</p>";
-    updateTotal();
-    return;
-  }
-
-  cartItems.innerHTML = cart.map((product, index) => `
-    <div class="cart-item">
-      <div class="cart-product"><img src="${product.image}" alt="${product.name}"><span>${product.name}</span></div>
-      <span>₱${product.price}</span>
-      <button class="add" onclick="removeItem(${index})">REMOVE</button>
-      <strong>₱${product.price}</strong>
-    </div>
-  `).join("");
-  updateTotal();
-}
-
-function updateTotal() {
-  const subtotal = cart.reduce((total, product) => total + product.price, 0);
-  const discount = voucherApplied ? Math.round(subtotal * 0.15) : 0;
-  document.getElementById("subtotal").textContent = "₱" + subtotal;
-  document.getElementById("discount").textContent = "₱" + discount;
-  document.getElementById("total").textContent = "₱" + (subtotal - discount);
-  document.getElementById("saved").textContent = "SAVED ₱" + discount;
-}
-
-document.getElementById("applyVoucher").onclick = () => {
-  voucherApplied = document.getElementById("voucher").value.trim().toUpperCase() == "ICT302";
-  updateTotal();
-  alert(voucherApplied ? "15% discount applied!" : "Invalid voucher code.");
-};
-
-document.getElementById("checkout").onclick = () => {
-  if (!cart.length) return alert("Your cart is empty!");
-  alert("Thank you for shopping with Beauty & Co.!");
-  cart = [];
-  voucherApplied = false;
-  updateCart();
-};
-
-renderProducts();
 updateCart();
 showPage("homePage");
