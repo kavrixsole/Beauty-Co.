@@ -157,7 +157,7 @@ h3 {
   border-radius: 4px;
   font-size: 11px;
   letter-spacing: 1px;
-  transition: 0.3s;
+  transition: 0.3s ease;
 }
 
 .primary {
@@ -191,7 +191,7 @@ h3 {
   height: 200px;
   object-fit: cover;
   border-radius: 10px;
-  transition: 0.3s;
+  transition: 0.3s ease;
 }
 
 .hero-gallery img:hover {
@@ -272,23 +272,23 @@ h3 {
   padding: 14px;
   border-radius: 10px;
   border: 1px solid #eedcc2;
-  transition: 0.3s;
+  transition: 0.3s ease;
 }
 
 .product:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  transform: translateY(-8px);
+  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15);
 }
 
 .product img {
   height: 220px;
   object-fit: cover;
   border-radius: 8px;
-  transition: 0.3s;
+  transition: 0.3s ease;
 }
 
 .product:hover img {
-  transform: scale(1.02);
+  transform: scale(1.03);
 }
 
 .product h3 {
@@ -313,7 +313,7 @@ h3 {
   border-radius: 4px;
   font-size: 10px;
   letter-spacing: 1px;
-  transition: 0.3s;
+  transition: 0.3s ease;
 }
 
 .add:hover,
