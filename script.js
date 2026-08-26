@@ -23,7 +23,7 @@ function showPage(page) {
 
 function productCard(product, index, withButton = true) {
   const button = withButton
-    ? `<button class="add" type="button" onclick="addToCart(${index})">🛍 ADD TO CART</button>`
+    ? `<button class="add" type="button" onclick="addToCart(${index})"> ADD TO CART</button>`
     : "";
 
   return `<article class="product"><img src="${product.image}" alt="${product.name}"><h3>${product.name}</h3><p class="price">₱${product.price}</p>${button}</article>`;
