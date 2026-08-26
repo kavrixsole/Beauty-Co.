@@ -14,27 +14,143 @@ const products = [
 let cart = [];
 let voucherApplied = false;
 
+
+// Change between Home, Product, and Cart pages
 function showPage(page) {
   ["homePage", "productsPage", "cartPage"].forEach((id) => {
     document.getElementById(id)?.classList.remove("active");
   });
+
   document.getElementById(page)?.classList.add("active");
 }
 
-function productCard(product, index, withButton = true) {
-  const button = withButton
-    ? `<button class="add" type="button" onclick="addToCart(${index})"> ADD TO CART</button>`
-    : "";
 
-  return `<article class="product"><img src="${product.image}" alt="${product.name}"><h3>${product.name}</h3><p class="price">₱${product.price}</p>${button}</article>`;
+// Add product to cart
+function addToCart(index) {
+  cart.push(products[index]);
+
+  alert("Added to cart!");
+
+  updateCart();
 }
 
-function renderProducts() {
-  const productGrid = document.getElementById("productGrid");
-  const homeCollection = document.getElementById("homeCollection");
 
-  if (productGrid) {
-    productGrid.innerHTML = products.map((product, index) => productCard(product, index)).join("");
+// Remove product from cart
+function removeItem(index) {
+  cart.splice(index, 1);
+
+  updateCart();
+}
+
+
+// Display cart items
+function updateCart() {
+  const cartItems = document.getElementById("cartItems");
+
+  if (!cartItems) return;
+
+  if (cart.length === 0) {
+    cartItems.innerHTML = "<p>Your cart is empty.</p>";
+
+    updateTotal();
+
+    return;
+  }
+
+  cartItems.innerHTML = cart.map((product, index) => `
+    <div class="cart-item">
+
+      <div class="cart-product">
+        <img src="${product.image}" alt="${product.name}">
+        <span>${product.name}</span>
+      </div>
+
+      <span>₱${product.price}</span>
+
+      <button class="add" onclick="removeItem(${index})">
+        REMOVE
+      </button>
+
+      <strong>₱${product.price}</strong>
+
+    </div>
+  `).join("");
+
+  updateTotal();
+}
+
+
+// Calculate subtotal, discount, and total
+function updateTotal() {
+
+  const subtotal = cart.reduce(
+    (total, product) => total + product.price,
+    0
+  );
+
+  const discount = voucherApplied
+    ? Math.round(subtotal * 0.15)
+    : 0;
+
+  document.getElementById("subtotal").textContent =
+    "₱" + subtotal;
+
+  document.getElementById("discount").textContent =
+    "₱" + discount;
+
+  document.getElementById("total").textContent =
+    "₱" + (subtotal - discount);
+
+  document.getElementById("saved").textContent =
+    "SAVED ₱" + discount;
+}
+
+
+// Apply voucher
+document.getElementById("applyVoucher").onclick = () => {
+
+  const voucher =
+    document.getElementById("voucher").value
+      .trim()
+      .toUpperCase();
+
+  if (voucher == "ICT302") {
+
+    voucherApplied = true;
+
+    updateTotal();
+
+    alert("15% discount applied!");
+
+  } else {
+
+    voucherApplied = false;
+
+    updateTotal();
+
+    alert("Invalid voucher code.");
+  }
+};
+
+// Checkout
+document.getElementById("checkout").onclick = () => {
+
+  if (!cart.length) {
+    return alert("Your cart is empty!");
+  }
+
+  alert("Thank you for shopping with Beauty & Co.!");
+
+  cart = [];
+
+  voucherApplied = false;
+
+  updateCart();
+};
+
+// Start the website on the Home page
+updateCart();
+showPage("homePage");    productGrid.innerHTML = products.map((product, index) => productCard(product, index)).join("");
   }
 
   if (homeCollection) {
