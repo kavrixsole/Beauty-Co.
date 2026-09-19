@@ -153,3 +153,26 @@ document.getElementById("checkout").onclick = () => {
 // Start the website on the Home page
 updateCart();
 showPage("homePage");
+
+$(document).ready(function () { 
+
+  $(".product").hover(
+    function () {
+      $(this).find("img").fadeTo(200, 0.7);
+    },
+    function () {
+      $(this).find("img").fadeTo(200, 1); 
+    }
+    );
+
+  $(".product .add").click(function () {
+    cons button = $(this);
+
+    button.text("ADDED!");
+
+    setTimeout(funtion () {
+     button.text("ADD TO CART");
+    }, 800);
+});
+
+});
