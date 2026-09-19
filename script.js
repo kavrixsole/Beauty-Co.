@@ -175,4 +175,9 @@ $(document).ready(function () {
     }, 800);
 });
 
+
+$("#closePromo").click(function () {
+  $(".promo").slideUp();
+});
+
 });
