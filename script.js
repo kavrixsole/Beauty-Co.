@@ -27,7 +27,22 @@ function showPage(page) {
 
 // Add product to cart
 function addToCart(index) {
-  cart.push(products[index]);
+  const product = products[index];
+
+  const existingProduct = cart.find(
+    item => item.name === product.name
+  );
+
+  if (existingProduct) {
+    existingProduct.quantity++;
+  } else {
+    cart.push({
+      name: product.name,
+      price: product.price,
+      image: product.image,
+      quantity: 1
+    });
+  }
 
   alert("Added to cart!");
 
@@ -35,9 +50,25 @@ function addToCart(index) {
 }
 
 
+
 // Remove product from cart
 function removeItem(index) {
   cart.splice(index, 1);
+
+  updateCart();
+}
+
+function increaseQuantity(index) {
+  cart[index].quantity++;
+  updateCart();
+}
+
+function decreaseQuantity(index) {
+  cart[index].quantity--;
+
+  if (cart[index].quantity <= 0) {
+    cart.splice(index, 1);
+  }
 
   updateCart();
 }
@@ -67,6 +98,36 @@ function updateCart() {
 
       <span>₱${product.price}</span>
 
+      <div class="quantity">
+        <button onclick="decreaseQuantity(${index})">−</button>
+
+        <span>${product.quantity}</span>
+
+        <button onclick="increaseQuantity(${index})">+</button>
+      </div>
+
+      <button class="add" onclick="removeItem(${index})">
+        REMOVE
+      </button>
+
+      <strong>₱${product.price * product.quantity}</strong>
+
+    </div>
+  `).join("");
+
+  updateTotal();
+}
+
+  cartItems.innerHTML = cart.map((product, index) => `
+    <div class="cart-item">
+
+      <div class="cart-product">
+        <img src="${product.image}" alt="${product.name}">
+        <span>${product.name}</span>
+      </div>
+
+      <span>₱${product.price}</span>
+
       <button class="add" onclick="removeItem(${index})">
         REMOVE
       </button>
@@ -77,16 +138,16 @@ function updateCart() {
   `).join("");
 
   updateTotal();
-}
+
 
 
 // Calculate subtotal, discount, and total
 function updateTotal() {
 
   const subtotal = cart.reduce(
-    (total, product) => total + product.price,
-    0
-  );
+  (total, product) => total + (product.price * product.quantity),
+  0
+);
 
   const discount = voucherApplied
     ? Math.round(subtotal * 0.15)
