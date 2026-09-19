@@ -166,7 +166,7 @@ $(document).ready(function () {
     );
 
   $(".product .add").click(function () {
-    cons button = $(this);
+    const button = $(this);
 
     button.text("ADDED!");
 
