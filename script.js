@@ -170,7 +170,7 @@ $(document).ready(function () {
 
     button.text("ADDED!");
 
-    setTimeout(funtion () {
+    setTimeout(function () {
      button.text("ADD TO CART");
     }, 800);
 });
